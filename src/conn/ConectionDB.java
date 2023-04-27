@@ -15,13 +15,13 @@ import java.sql.SQLException;
  */
 public class ConectionDB {
         
-       private final String url = "jdbc:mysql://localhost:3306/autocompany";
-       private final String user = "root";
-       private final String pswrd = "";
-       Connection conn = null;
+       private static String url = "jdbc:mysql://localhost:3306/autocompany";
+       private static String user = "root";
+       private static String pswrd = "";
+       private static Connection conn = null;
 
    
-        public Connection getConn() throws SQLException, ClassNotFoundException {
+        public static Connection getConn() throws SQLException, ClassNotFoundException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, user, pswrd);

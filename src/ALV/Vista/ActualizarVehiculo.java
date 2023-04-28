@@ -195,7 +195,8 @@ public class ActualizarVehiculo extends javax.swing.JFrame {
     private void saleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saleActionPerformed
         // TODO add your handling code here:
 
-        System.exit(0);
+  System.exit(0);
+  
     }//GEN-LAST:event_saleActionPerformed
 
     private void Iingre1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Iingre1ActionPerformed

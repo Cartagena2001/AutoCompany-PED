@@ -5,6 +5,7 @@
  */
 package ALV.Vista;
 
+import conn.ConectionDB;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JTable;
@@ -21,7 +22,66 @@ public class Buscar extends javax.swing.JFrame {
      */
     public Buscar() {
         initComponents();
+        llenarDatosTipoCarro();
+        llenarMarca();
+        llenarTabla();
 
+    }
+    
+    public void llenarDatosTipoCarro() {
+        String consulta = "select * from cat_tipo_vehi";
+        try {
+            Statement sentencia = ConectionDB.getConn().createStatement();
+            ResultSet resultado = sentencia.executeQuery(consulta);
+            while (resultado.next()) {
+                System.out.println(resultado.getObject("tipo_vehiculo"));
+                jComboBoxTipo.addItem(resultado.getString("tipo_vehiculo"));
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    public void llenarMarca() {
+        String consulta = "select * from marca";
+        try {
+            Statement sentencia = ConectionDB.getConn().createStatement();
+            ResultSet resultado = sentencia.executeQuery(consulta);
+            while (resultado.next()) {
+                System.out.println(resultado.getObject("nombre_marca"));
+                jComboBoxMarca.addItem(resultado.getString("nombre_marca"));
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    public void llenarTabla() {
+        String consulta = "select id_vehiculo,tipo_vehiculo,tipo_motor,nombre_marca,transmision,modelo,precio,año from vehiculo ve\n"
+                + "inner join cat_tipo_vehi cat\n"
+                + "on ve.id_tipo_vehi = cat.id_tipo_vehi\n"
+                + "inner join cat_motor catm\n"
+                + "on ve.id_motor = catm.id_motor\n"
+                + "inner join marca mar\n"
+                + "on ve.id_marca = mar.id_marca";
+        try {
+            Statement sentencia = ConectionDB.getConn().createStatement();
+            ResultSet resultado = sentencia.executeQuery(consulta);
+            String[] columnNames = {"CODIGO", "Tipo Vehiculo", "Motor", "Marca", "Transmision", "Modelo", "Precio", "Año"};
+
+            DefaultTableModel tableModel = (DefaultTableModel) jTableDatos.getModel();
+            tableModel.setColumnIdentifiers(columnNames);
+            tableModel.setRowCount(0);
+            java.sql.ResultSetMetaData rsmd = resultado.getMetaData();
+            int colNo = rsmd.getColumnCount();
+            while (resultado.next()) {
+                Object[] objects = new Object[colNo];
+                for (int i = 0; i < colNo; i++) {
+                    objects[i] = resultado.getObject(i + 1);
+                }
+                tableModel.addRow(objects);
+            }
+            jTableDatos.setModel(tableModel);
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -148,7 +208,36 @@ public class Buscar extends javax.swing.JFrame {
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         // TODO add your handling code here:
+        System.out.println("AVL.Vista.Buscar.BuscarActionPerformed()");
+        String modelo = jTextValor.getText();
+        String marca = jComboBoxMarca.getSelectedItem().toString();
+        String tipo = jComboBoxTipo.getSelectedItem().toString();
+        String consulta = "select id_vehiculo,tipo_vehiculo,tipo_motor,nombre_marca,transmision,modelo,precio,año from vehiculo ve\n" +
+            "inner join cat_tipo_vehi cat on ve.id_tipo_vehi = cat.id_tipo_vehi \n" +
+            "inner join cat_motor catm on ve.id_motor = catm.id_motor\n" +
+            "inner join marca mar on ve.id_marca = mar.id_marca\n" +
+            "where  modelo like '"+modelo+"%' or nombre_marca='"+marca+"' or tipo_vehiculo='"+tipo+"'";
+        try {
+            Statement sentencia = ConectionDB.getConn().createStatement();
+            ResultSet resultado = sentencia.executeQuery(consulta);
+            String[] columnNames = {"CODIGO", "Tipo Vehiculo", "Motor", "Marca", "Transmision", "Modelo", "Precio", "Año"};
 
+            DefaultTableModel tableModel = (DefaultTableModel) jTableDatos.getModel();
+            tableModel.setColumnIdentifiers(columnNames);
+            tableModel.setRowCount(0);
+            java.sql.ResultSetMetaData rsmd = resultado.getMetaData();
+            int colNo = rsmd.getColumnCount();
+            while (resultado.next()) {
+                Object[] objects = new Object[colNo];
+                for (int i = 0; i < colNo; i++) {
+                    objects[i] = resultado.getObject(i + 1);
+                    System.out.println("datos == "+resultado.getObject(i + 1));
+                }
+                tableModel.addRow(objects);
+            }
+            jTableDatos.setModel(tableModel);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_BuscarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

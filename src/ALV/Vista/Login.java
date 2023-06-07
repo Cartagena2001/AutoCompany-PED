@@ -1,8 +1,11 @@
 package ALV.Vista;
 
+import control.controlLogin;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
+
+    private controlLogin loguin;
 
     /**
      * Creacion de Login
@@ -40,7 +43,7 @@ public class Login extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Contraseña");
 
-        txtContra.setText("jPasswordField1");
+        txtContra.setToolTipText("");
 
         jButton1.setBackground(new java.awt.Color(0, 153, 153));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -147,16 +150,41 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Buscar window = new Buscar();
-        window.setVisible(true);
-        this.dispose();
-        setDefaultCloseOperation(Login.EXIT_ON_CLOSE);
+        loguin = new controlLogin();
+        try {
+            String nombre = txtNombre.getText();
+            String contrasena = txtContra.getText();
+
+            if (nombre.isEmpty() || contrasena.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+            } else {
+                if (loguin.getID(nombre, contrasena).isBandera()) {
+                    Buscar window = new Buscar();
+                    window.setVisible(true);
+                    this.dispose();
+                    setDefaultCloseOperation(Login.EXIT_ON_CLOSE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuario y Contraseña Incorrectos");
+                }
+            }
+        } catch (Exception e2) {
+            // TODO: manejar la excepción de manera apropiada
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here
-        Inventario inven = new Inventario();
-        inven.setVisible(true);
+        loguin = new controlLogin();
+        try {
+            if ((loguin.getID(txtNombre.getText(), txtContra.getText()).isBandera() == true) && loguin.getID(txtNombre.getText(), txtContra.getText()).getRol().equalsIgnoreCase("1")) {
+                Inventario inven = new Inventario();
+                inven.setVisible(true);
+            } else {
+
+                JOptionPane.showInputDialog(null, "Usuario no permitido");
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

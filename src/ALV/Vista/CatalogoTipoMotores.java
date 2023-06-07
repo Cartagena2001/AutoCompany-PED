@@ -5,6 +5,9 @@
  */
 package ALV.Vista;
 
+import conn.ConectionDB;
+import control.ControlCatalogoTipoMotor;
+import control.TipoMotor;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -21,6 +24,37 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
     public CatalogoTipoMotores() {
         initComponents();
     }
+    
+    public void llenarDatos(){
+        String consulta="select * from cat_motor";
+        try {
+            Statement sentencia=ConectionDB.getConn().createStatement();
+            ResultSet resultado=sentencia.executeQuery(consulta);
+            while (resultado.next())
+            {
+                System.out.println (resultado.getObject("tipo_motor") );
+                jComboBox1.addItem(resultado.getString("tipo_motor"));
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    public void llenarActu(){
+        String var = jComboBox1.getSelectedItem().toString();
+        jTextLLe.setText(var);
+        /*String consulta="select * from cat_motor where tipo_motor";
+        try {
+            Statement sentencia=ConexionBase.obtener().createStatement();
+            ResultSet resultado=sentencia.executeQuery(consulta);
+            while (resultado.next())
+            {
+                System.out.println (resultado.getObject("tipo_motor") );
+                jComboBox1.addItem(resultado.getString("tipo_motor"));
+            }
+        } catch (Exception e) {
+        }*/
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -173,11 +207,38 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextLLeActionPerformed
 
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        // TODO add your handling code here:
+        ControlCatalogoTipoMotor ctm = new ControlCatalogoTipoMotor();
+        try {
+            if (ctm.process(jTextLLe.getText()) == true) {
+                JOptionPane.showMessageDialog(null, "Agregado con exito");
+                String consulta = "select * from cat_motor";
+                Statement sentencia =ConectionDB.getConn().createStatement();
+                ResultSet resultado = sentencia.executeQuery(consulta);
+                while (resultado.next()) {
+                    System.out.println(resultado.getObject("tipo_motor"));
+                    jComboBox1.addItem(resultado.getString("tipo_motor"));
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No se puse ingresar dato");
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
     private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
-        // TODO add your handling code here:
+        TipoMotor motorID = new TipoMotor();
+        ControlCatalogoTipoMotor ctm = new ControlCatalogoTipoMotor();
+        try {
+            String id = motorID.getID(jComboBox1.getSelectedItem().toString());
+            if(ctm.update(jTextLLe.getText(), id)==true){
+                JOptionPane.showMessageDialog(null, "Actualizado con exito");
+            }else{
+                JOptionPane.showMessageDialog(null, "No se actualizo");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Problemas con el sistema");
+        }
     }//GEN-LAST:event_jButtonActualizarActionPerformed
 
     private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
@@ -189,11 +250,22 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextLLeFocusGained
 
     private void jTextLLeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextLLeMouseEntered
-        // TODO add your handling code here:
+       String var = jComboBox1.getSelectedItem().toString();
+        jTextLLe.setText(var);
     }//GEN-LAST:event_jTextLLeMouseEntered
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        // TODO add your handling code here:
+       TipoMotor motorID = new TipoMotor();
+        ControlCatalogoTipoMotor dat = new ControlCatalogoTipoMotor();
+        try {
+            if(dat.delete(jTextLLe.getText())){
+           JOptionPane.showMessageDialog(null, "Eliminado con exito");
+            }else{
+                JOptionPane.showMessageDialog(null, "No se actualizoo");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Problemas con el sistema");
+        }
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -5,6 +5,10 @@
  */
 package ALV.Vista;
 
+import conn.ConectionDB;
+import control.controlLogin;
+import control.ControlRegistroUsuario;
+import entities.EntityRegistroUsuarios;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,6 +27,29 @@ public class Inventario extends javax.swing.JFrame {
      */
     public Inventario() {
         initComponents();
+        llenarDatos();
+    }
+    
+     public void llenarDatos(){
+        String consulta="select * from roles";
+        int tipo = 0;
+        try {
+            Statement sentencia=ConectionDB.getConn().createStatement();
+            ResultSet resultado=sentencia.executeQuery(consulta);
+            while (resultado.next())
+            {
+                System.out.println (resultado.getObject("id_rol") );
+                tipo = resultado.getInt("id_rol");
+                if(1 == tipo){
+                    jComboTipo.addItem("Administrador");
+                }
+                if(2 == tipo){
+                    jComboTipo.addItem("Empleado");
+                }
+            }
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "Error al ejecutar la consulta: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -112,6 +139,38 @@ public class Inventario extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        ControlRegistroUsuario registroUsuarios = new ControlRegistroUsuario();
+        EntityRegistroUsuarios ent = new EntityRegistroUsuarios();
+        
+        ent.setNombre(jTextNombre.getText());
+        ent.setAlias(jTextAlias.getText());
+        if (registroUsuarios.processLoguin(jTextAlias.getText(), jTextContra.getText()) == true) {
+
+            try {
+                if ("Administrador".equalsIgnoreCase(jComboTipo.getSelectedItem().toString())) {
+                    ent.setRol("1");
+                }
+                if ("Empleado".equalsIgnoreCase(jComboTipo.getSelectedItem().toString())) {
+                    ent.setRol("2");
+                }
+                controlLogin getid = new controlLogin();
+                //getid.getIDLOguin(jTextAlias.getText())
+                if (registroUsuarios.process(ent,getid.getIDLOguin(jTextAlias.getText())) == true) {
+                    JOptionPane.showMessageDialog(null, "Agregado con exito");
+                    Login login = new Login();
+                    login.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Revise informacion");
+                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else {
+                JOptionPane.showMessageDialog(null, "Revise informacion");
+
+            }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

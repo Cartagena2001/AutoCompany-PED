@@ -17,7 +17,7 @@ public class ConectionDB {
         
        private static String url = "jdbc:mysql://localhost:3306/autocompany";
        private static String user = "root";
-       private static String pswrd = "root";
+       private static String pswrd = "";
        private static Connection conn = null;
 
    

@@ -5,9 +5,6 @@
  */
 package ALV.Vista;
 
-import conn.ConectionDB;
-import control.ControlCatalogoTipoMotor;
-import control.TipoMotor;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -16,45 +13,14 @@ import javax.swing.JOptionPane;
  *
  * @author SergioCardoza
  */
-public class CatalogoTipoMotores extends javax.swing.JFrame {
+public class CatalogoMarca extends javax.swing.JFrame {
 
     /**
      * Creacion del Formulario CatalogoTipoMotores
      */
-    public CatalogoTipoMotores() {
+    public CatalogoMarca() {
         initComponents();
     }
-    
-    public void llenarDatos(){
-        String consulta="select * from cat_motor";
-        try {
-            Statement sentencia=ConectionDB.getConn().createStatement();
-            ResultSet resultado=sentencia.executeQuery(consulta);
-            while (resultado.next())
-            {
-                System.out.println (resultado.getObject("tipo_motor") );
-                jComboBox1.addItem(resultado.getString("tipo_motor"));
-            }
-        } catch (Exception e) {
-        }
-    }
-    
-    public void llenarActu(){
-        String var = jComboBox1.getSelectedItem().toString();
-        jTextLLe.setText(var);
-        /*String consulta="select * from cat_motor where tipo_motor";
-        try {
-            Statement sentencia=ConexionBase.obtener().createStatement();
-            ResultSet resultado=sentencia.executeQuery(consulta);
-            while (resultado.next())
-            {
-                System.out.println (resultado.getObject("tipo_motor") );
-                jComboBox1.addItem(resultado.getString("tipo_motor"));
-            }
-        } catch (Exception e) {
-        }*/
-    }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -81,7 +47,7 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
         jLabel1.setText("Datos");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("Tipo motor de vehiculo:");
+        jLabel2.setText("Marca:");
 
         jTextLLe.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -154,49 +120,45 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
                         .addGap(68, 68, 68)
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(301, 301, 301)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButtonActualizar)
-                                .addGap(36, 36, 36)
-                                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(33, 33, 33)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextLLe)
-                                    .addComponent(jComboBox1, 0, 187, Short.MAX_VALUE))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(56, 56, 56)
+                                    .addComponent(jTextLLe, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel1)
-                .addGap(42, 42, 42)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextLLe, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jTextLLe, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonEliminar)
                     .addComponent(jButtonActualizar)
                     .addComponent(jButton1)
                     .addComponent(jButtonAgregar))
-                .addGap(47, 47, 47))
+                .addGap(45, 45, 45))
         );
 
         pack();
@@ -207,38 +169,11 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextLLeActionPerformed
 
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        ControlCatalogoTipoMotor ctm = new ControlCatalogoTipoMotor();
-        try {
-            if (ctm.process(jTextLLe.getText()) == true) {
-                JOptionPane.showMessageDialog(null, "Agregado con exito");
-                String consulta = "select * from cat_motor";
-                Statement sentencia =ConectionDB.getConn().createStatement();
-                ResultSet resultado = sentencia.executeQuery(consulta);
-                while (resultado.next()) {
-                    System.out.println(resultado.getObject("tipo_motor"));
-                    jComboBox1.addItem(resultado.getString("tipo_motor"));
-                }
 
-            } else {
-                JOptionPane.showMessageDialog(null, "No se puse ingresar dato");
-            }
-        } catch (Exception e) {
-        }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
     private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
-        TipoMotor motorID = new TipoMotor();
-        ControlCatalogoTipoMotor ctm = new ControlCatalogoTipoMotor();
-        try {
-            String id = motorID.getID(jComboBox1.getSelectedItem().toString());
-            if(ctm.update(jTextLLe.getText(), id)==true){
-                JOptionPane.showMessageDialog(null, "Actualizado con exito");
-            }else{
-                JOptionPane.showMessageDialog(null, "No se actualizo");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Problemas con el sistema");
-        }
+
     }//GEN-LAST:event_jButtonActualizarActionPerformed
 
     private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
@@ -250,22 +185,11 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextLLeFocusGained
 
     private void jTextLLeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextLLeMouseEntered
-       String var = jComboBox1.getSelectedItem().toString();
-        jTextLLe.setText(var);
+
     }//GEN-LAST:event_jTextLLeMouseEntered
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-       TipoMotor motorID = new TipoMotor();
-        ControlCatalogoTipoMotor dat = new ControlCatalogoTipoMotor();
-        try {
-            if(dat.delete(jTextLLe.getText())){
-           JOptionPane.showMessageDialog(null, "Eliminado con exito");
-            }else{
-                JOptionPane.showMessageDialog(null, "No se actualizoo");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Problemas con el sistema");
-        }
+
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

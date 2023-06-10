@@ -5,6 +5,12 @@
  */
 package ALV.Vista;
 
+import conn.ConectionDB;
+import control.ControlMarca;
+import control.ControlRegistroVehiculos;
+import control.TipoMotor;
+import control.TipoVehiculo;
+import entities.EntityRegistroVehiculos;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -14,12 +20,61 @@ import javax.swing.JOptionPane;
  * @author SergioCardoza
  */
 public class Registro extends javax.swing.JFrame {
-
+    
+    public TipoMotor tipoMotor;
+    public ControlMarca marca;
+    public TipoVehiculo tipoVehiculo;
+    public ConectionDB con = new ConectionDB();
     /**
      * Creacion Formulario de Registro
      */
     public Registro() {
         initComponents();
+        llenarDatos();
+        llenarDatosTipoCarro();
+        llenarMarca();
+    }
+    
+    public void llenarDatos(){
+        String consulta="select * from cat_motor";
+        try {
+            Statement sentencia=ConectionDB.getConn().createStatement();
+            ResultSet resultado=sentencia.executeQuery(consulta);
+            while (resultado.next())
+            {
+                System.out.println (resultado.getObject("tipo_motor") );
+                ComboBoxTipoMotor.addItem(resultado.getString("tipo_motor"));
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    public void llenarDatosTipoCarro(){
+        String consulta="select * from cat_tipo_vehi";
+        try {
+            Statement sentencia=ConectionDB.getConn().createStatement();
+            ResultSet resultado=sentencia.executeQuery(consulta);
+            while (resultado.next())
+            {
+                System.out.println (resultado.getObject("tipo_vehiculo") );
+                jComboBoxTipoCarro.addItem(resultado.getString("tipo_vehiculo"));
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+     public void llenarMarca(){
+        String consulta="select * from marca";
+        try {
+            Statement sentencia=ConectionDB.getConn().createStatement();
+            ResultSet resultado=sentencia.executeQuery(consulta);
+            while (resultado.next())
+            {
+                System.out.println (resultado.getObject("nombre_marca") );
+                jComboBoxMarca.addItem(resultado.getString("nombre_marca"));
+            }
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -194,7 +249,46 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        // TODO add your handling code here:
+        tipoMotor = new TipoMotor();
+        marca = new ControlMarca();
+        tipoVehiculo = new TipoVehiculo();
+        EntityRegistroVehiculos vehiculosRegistro = new EntityRegistroVehiculos();
+        System.out.println("elemento combo"+ComboBoxTipoMotor.getSelectedItem());
+        try {
+            if(((jRadioAuto.isSelected()==false && jRadioManual.isSelected()==true)||
+                    (jRadioAuto.isSelected()==true && jRadioManual.isSelected()==false))&&
+                    !"".equalsIgnoreCase(jTextModelo.getText()) && !"".equalsIgnoreCase(jTextPrecio.getText())){
+                   
+            
+            vehiculosRegistro.setTipoMotor(tipoMotor.getID(ComboBoxTipoMotor.getSelectedItem().toString()));
+            vehiculosRegistro.setMarca(marca.getID(jComboBoxMarca.getSelectedItem().toString()));
+            vehiculosRegistro.setTipoCarro(tipoVehiculo.getID(jComboBoxTipoCarro.getSelectedItem().toString()));
+            vehiculosRegistro.setModelo(jTextModelo.getText());
+            vehiculosRegistro.setAnio(jComboBoxAnio.getSelectedItem().toString());
+            vehiculosRegistro.setPrecio(Double.parseDouble(jTextPrecio.getText()));
+            if(jRadioAuto.isSelected()==false){
+                vehiculosRegistro.setTranss(1);
+            }else if (jRadioManual.isSelected()==false){
+                vehiculosRegistro.setTranss(2);
+            }
+            
+           
+            ControlRegistroVehiculos rv = new ControlRegistroVehiculos();
+            if(rv.process(vehiculosRegistro)==true){
+                JOptionPane.showMessageDialog(null, "Vehiculo Agregado con exito");
+                Buscar buscar  = new Buscar();
+                buscar.setVisible(true);
+                this.dispose();
+            }else{
+                  JOptionPane.showMessageDialog(null, "Revisar Datos ");
+            }
+        }else{
+                JOptionPane.showMessageDialog(null, "Llene los campos requeridos");
+                }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
     private void jButtonAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAgregarMouseClicked

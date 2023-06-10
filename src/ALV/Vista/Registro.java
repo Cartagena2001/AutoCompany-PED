@@ -13,7 +13,9 @@ import control.TipoVehiculo;
 import entities.EntityRegistroVehiculos;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -25,6 +27,7 @@ public class Registro extends javax.swing.JFrame {
     public ControlMarca marca;
     public TipoVehiculo tipoVehiculo;
     public ConectionDB con = new ConectionDB();
+    private int id;
     /**
      * Creacion Formulario de Registro
      */
@@ -110,6 +113,7 @@ public class Registro extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -229,6 +233,16 @@ public class Registro extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, -1, 110));
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 310, -1, -1));
 
+        jButton3.setBackground(new java.awt.Color(0, 153, 153));
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton3.setText("Regresar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 230, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -309,6 +323,16 @@ public class Registro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        try {
+            Buscar b = new Buscar();
+            b.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     private void limpiarregText() {
 
         jTextModelo.setText("");
@@ -320,16 +344,17 @@ public class Registro extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboBoxTipoMotor;
+    public javax.swing.JComboBox<String> ComboBoxTipoMotor;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButtonAgregar;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBoxAnio;
-    private javax.swing.JComboBox<String> jComboBoxMarca;
-    private javax.swing.JComboBox<String> jComboBoxTipoCarro;
+    public javax.swing.JComboBox<String> jComboBox4;
+    public javax.swing.JComboBox<String> jComboBoxAnio;
+    public javax.swing.JComboBox<String> jComboBoxMarca;
+    public javax.swing.JComboBox<String> jComboBoxTipoCarro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -340,9 +365,9 @@ public class Registro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioAuto;
-    private javax.swing.JRadioButton jRadioManual;
-    private javax.swing.JTextField jTextModelo;
-    private javax.swing.JTextField jTextPrecio;
+    public javax.swing.JRadioButton jRadioAuto;
+    public javax.swing.JRadioButton jRadioManual;
+    public javax.swing.JTextField jTextModelo;
+    public javax.swing.JTextField jTextPrecio;
     // End of variables declaration//GEN-END:variables
 }

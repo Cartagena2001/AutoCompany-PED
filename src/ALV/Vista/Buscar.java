@@ -10,6 +10,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import control.ControlRegistroVehiculos;
+import javax.swing.JOptionPane;
+import entities.EntityRegistroVehiculos;
 
 /**
  *
@@ -83,6 +86,31 @@ public class Buscar extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
+    
+    private EntityRegistroVehiculos obtenerDatosVehiculo(int id) {
+        // Realizar la consulta a la base de datos para obtener los datos del vehículo con el ID especificado
+        String consulta = "SELECT * FROM vehiculo WHERE id_vehiculo = " + id;
+        
+        try {
+            Statement sentencia = ConectionDB.getConn().createStatement();
+            ResultSet resultado = sentencia.executeQuery(consulta);
+            
+            if (resultado.next()) {
+                EntityRegistroVehiculos vehiculo = new EntityRegistroVehiculos();
+                vehiculo.setTipoMotor(resultado.getString("id_motor"));
+                vehiculo.setTipoCarro(resultado.getString("id_tipo_vehi"));
+                vehiculo.setMarca(resultado.getString("id_marca"));
+                vehiculo.setModelo(resultado.getString("modelo"));
+                vehiculo.setAnio(resultado.getString("año"));
+                vehiculo.setPrecio(resultado.getDouble("precio"));
+                return vehiculo;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,6 +134,8 @@ public class Buscar extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         Buscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("InfoInvetarioCarros"); // NOI18N
@@ -127,6 +157,11 @@ public class Buscar extends javax.swing.JFrame {
 
             }
         ));
+        jTableDatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDatosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableDatos);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 198, 850, 260));
@@ -166,13 +201,13 @@ public class Buscar extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(0, 153, 153));
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton3.setText("Modificar datos ");
+        jButton3.setText("Eliminar Vehiculo");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 480, 180, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 520, 180, -1));
 
         Buscar.setBackground(new java.awt.Color(0, 153, 153));
         Buscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -188,6 +223,26 @@ public class Buscar extends javax.swing.JFrame {
         jLabel1.setText(" ");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, -1, -1));
 
+        jButton4.setBackground(new java.awt.Color(0, 153, 153));
+        jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton4.setText("Ingresar Vehiculo");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 480, 180, -1));
+
+        jButton5.setBackground(new java.awt.Color(0, 153, 153));
+        jButton5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton5.setText("Modificar datos ");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 480, 180, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -202,24 +257,19 @@ public class Buscar extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-//        int selectedRow = jTableDatos.getSelectedRow();
-//        if (selectedRow != -1) { // Verifica que se haya seleccionado una fila
-//            String idVehiculo = jTableDatos.getValueAt(selectedRow, 0).toString();
-//            String tipoVehiculo = jTableDatos.getValueAt(selectedRow, 1).toString();
-//            String tipoMotor = jTableDatos.getValueAt(selectedRow, 2).toString();
-//            String marca = jTableDatos.getValueAt(selectedRow, 3).toString();
-//            String transmision = jTableDatos.getValueAt(selectedRow, 4).toString();
-//            String modelo = jTableDatos.getValueAt(selectedRow, 5).toString();
-//            String precio = jTableDatos.getValueAt(selectedRow, 6).toString();
-//            String anio = jTableDatos.getValueAt(selectedRow, 7).toString();
-//            
-//            Registro registro = new Registro(idVehiculo, tipoVehiculo, tipoMotor, marca, transmision, modelo, precio, anio);
-//            registro.setVisible(true);
-//            dispose(); // Cerrar el formulario actual si es necesario
-//        } else {
-//            // No se ha seleccionado ninguna fila, mostrar un mensaje de error o realizar otra acción
-//        }
+        int row = jTableDatos.getSelectedRow();
+        if (row != -1) {
+            int id = (int) jTableDatos.getValueAt(row, 0);
+            ControlRegistroVehiculos control = new ControlRegistroVehiculos();
+            if (control.delete(id)) {
+                JOptionPane.showMessageDialog(null, "Registro eliminado con éxito");
+                llenarTabla();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al eliminar el registro");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione un registro para eliminar");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
@@ -262,6 +312,54 @@ public class Buscar extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jTableDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDatosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableDatosMouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // Obtener la fila seleccionada en la tabla
+    int filaSeleccionada = jTableDatos.getSelectedRow();
+    
+    // Verificar si se seleccionó una fila
+    if (filaSeleccionada >= 0) {
+        // Obtener el valor de la columna ID de la fila seleccionada
+        int id = Integer.parseInt(jTableDatos.getValueAt(filaSeleccionada, 0).toString());
+        
+        // Obtener los datos correspondientes al ID seleccionado
+        EntityRegistroVehiculos vehiculo = obtenerDatosVehiculo(id);
+        
+        // Verificar si se obtuvieron los datos correctamente
+        if (vehiculo != null) {
+            // Abrir el formulario de Registro con los datos del vehículo para editar
+            Registro registroFormulario = new Registro();
+            registroFormulario.llenarDatos();
+            registroFormulario.llenarDatosTipoCarro();
+            registroFormulario.llenarMarca();
+            
+            // Asignar los datos del vehículo al formulario de Registro
+            registroFormulario.ComboBoxTipoMotor.setSelectedItem(vehiculo.getTipoMotor());
+            registroFormulario.jComboBoxTipoCarro.setSelectedItem(vehiculo.getTipoCarro());
+            registroFormulario.jComboBoxMarca.setSelectedItem(vehiculo.getMarca());
+            registroFormulario.jTextModelo.setText(vehiculo.getModelo());
+            registroFormulario.jComboBoxAnio.setSelectedItem(vehiculo.getAnio());
+            registroFormulario.jTextPrecio.setText(Double.toString(vehiculo.getPrecio()));
+            
+            // Mostrar el formulario de Registro
+            registroFormulario.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontraron datos del vehículo.");
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Seleccione una fila de la tabla.");
+    }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -303,6 +401,8 @@ public class Buscar extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBoxMarca;
     private javax.swing.JComboBox<String> jComboBoxTipo;
     private javax.swing.JLabel jLabel1;

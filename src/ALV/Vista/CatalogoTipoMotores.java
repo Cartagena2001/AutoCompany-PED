@@ -69,7 +69,6 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextLLe = new javax.swing.JTextField();
         jButtonAgregar = new javax.swing.JButton();
-        jButtonActualizar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
@@ -105,15 +104,6 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
         jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAgregarActionPerformed(evt);
-            }
-        });
-
-        jButtonActualizar.setBackground(new java.awt.Color(0, 153, 153));
-        jButtonActualizar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButtonActualizar.setText("Actualizar");
-        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonActualizarActionPerformed(evt);
             }
         });
 
@@ -160,9 +150,11 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonActualizar)
-                                .addGap(36, 36, 36)
-                                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(87, 87, 87)
+                                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(33, 33, 33)
@@ -170,12 +162,6 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
                                     .addComponent(jTextLLe)
                                     .addComponent(jComboBox1, 0, 187, Short.MAX_VALUE))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,7 +179,6 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonEliminar)
-                    .addComponent(jButtonActualizar)
                     .addComponent(jButton1)
                     .addComponent(jButtonAgregar))
                 .addGap(47, 47, 47))
@@ -226,21 +211,6 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
-    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
-        TipoMotor motorID = new TipoMotor();
-        ControlCatalogoTipoMotor ctm = new ControlCatalogoTipoMotor();
-        try {
-            String id = motorID.getID(jComboBox1.getSelectedItem().toString());
-            if(ctm.update(jTextLLe.getText(), id)==true){
-                JOptionPane.showMessageDialog(null, "Actualizado con exito");
-            }else{
-                JOptionPane.showMessageDialog(null, "No se actualizo");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Problemas con el sistema");
-        }
-    }//GEN-LAST:event_jButtonActualizarActionPerformed
-
     private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1MouseClicked
@@ -251,7 +221,7 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
 
     private void jTextLLeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextLLeMouseEntered
        String var = jComboBox1.getSelectedItem().toString();
-        jTextLLe.setText(var);
+       jTextLLe.setText(var);
     }//GEN-LAST:event_jTextLLeMouseEntered
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
@@ -284,7 +254,6 @@ public class CatalogoTipoMotores extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JComboBox<String> jComboBox1;

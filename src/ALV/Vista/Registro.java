@@ -107,7 +107,6 @@ public class Registro extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -215,16 +214,6 @@ public class Registro extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 230, -1));
 
-        jButton4.setBackground(new java.awt.Color(0, 153, 153));
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton4.setText("Agregar Tipo de Vehiculo");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
-
         jButton7.setBackground(new java.awt.Color(0, 153, 153));
         jButton7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton7.setText("Agregar Marca");
@@ -297,8 +286,12 @@ public class Registro extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        CatalogoTipoMotores ctm = new CatalogoTipoMotores();
-        ctm.setVisible(true);
+        try {
+            CatalogoTipoMotores ctm = new CatalogoTipoMotores();
+            ctm.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+        }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -307,12 +300,14 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        try {
+            CatalogoMarca ctm = new CatalogoMarca();
+            ctm.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     private void limpiarregText() {
 
@@ -328,7 +323,6 @@ public class Registro extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ComboBoxTipoMotor;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButtonAgregar;

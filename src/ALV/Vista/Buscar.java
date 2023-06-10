@@ -203,7 +203,23 @@ public class Buscar extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+//        int selectedRow = jTableDatos.getSelectedRow();
+//        if (selectedRow != -1) { // Verifica que se haya seleccionado una fila
+//            String idVehiculo = jTableDatos.getValueAt(selectedRow, 0).toString();
+//            String tipoVehiculo = jTableDatos.getValueAt(selectedRow, 1).toString();
+//            String tipoMotor = jTableDatos.getValueAt(selectedRow, 2).toString();
+//            String marca = jTableDatos.getValueAt(selectedRow, 3).toString();
+//            String transmision = jTableDatos.getValueAt(selectedRow, 4).toString();
+//            String modelo = jTableDatos.getValueAt(selectedRow, 5).toString();
+//            String precio = jTableDatos.getValueAt(selectedRow, 6).toString();
+//            String anio = jTableDatos.getValueAt(selectedRow, 7).toString();
+//            
+//            Registro registro = new Registro(idVehiculo, tipoVehiculo, tipoMotor, marca, transmision, modelo, precio, anio);
+//            registro.setVisible(true);
+//            dispose(); // Cerrar el formulario actual si es necesario
+//        } else {
+//            // No se ha seleccionado ninguna fila, mostrar un mensaje de error o realizar otra acción
+//        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
